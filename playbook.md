@@ -11,7 +11,7 @@ An **iron butterfly** on a 0-DTE (zero days to expiration) index option — SPX 
 
 An iron butterfly is an iron condor where both short strikes are placed at the same price (ATM). You're selling a call vertical and a put vertical with the same short strike, collecting premium from both sides simultaneously.
 
-The core mechanic: **you're selling time**. 0-DTE options expire worthless by end of day if the market doesn't move far enough. You're betting on that — and using active management to protect yourself when it does move.
+The core mechanic: **you're selling time**. 0-DTE options lose value extremely fast as the day progresses. You sell premium in the morning and buy it back for less once enough has decayed — pocketing the difference. Active management protects you when the market moves against one side.
 
 ---
 
@@ -96,7 +96,7 @@ Your goal is a general feel for the day — not a precise prediction, just enoug
 
 ### What You're Doing While You Wait
 
-You're buying time. While your butterfly is open, theta decay is working in your favor every minute. The longer the market holds near your short strike, the more premium decays. You're reading the tape while collecting.
+You're buying time. While your butterfly is open, theta decay is working in your favor every minute. The longer the market holds near your short strike, the cheaper it becomes to buy your position back. Your profit is the difference between what you sold the premium for and what you pay to close it. You're reading the tape while that gap widens.
 
 ---
 
