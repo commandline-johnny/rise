@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Shane Makes Money Every Day</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #07090f;
+  --surface:    #0d1220;
+  --surface2:   #131929;
+  --gold:       #d4a843;
+  --gold-light: #f0c96a;
+  --gold-dim:   #7a6028;
+  --cream:      #f0ead6;
+  --cream-dim:  #9a9080;
+  --blue-dim:   #3a5070;
+  --green:      #4caf88;
+  --red:        #e05a5a;
+  --font-d: Georgia, 'Palatino Linotype', 'Book Antiqua', serif;
+  --font-b: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:var(--cream); font-family:var(--font-b); }
+
+/* subtle grain */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:999; opacity:.25;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
+}
+
+/* ── SLIDE SYSTEM ── */
+.deck { width:100vw; height:100vh; position:relative; }
+
+.slide {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+  padding:56px 100px 72px;
+  opacity:0; pointer-events:none;
+  transition:opacity .55s ease;
+}
+.slide.center { align-items:center; text-align:center; }
+.slide.active  { opacity:1; pointer-events:all; }
+
+/* entrance animations */
+.slide.active .a1 { animation:up .65s .00s ease both; }
+.slide.active .a2 { animation:up .65s .10s ease both; }
+.slide.active .a3 { animation:up .65s .20s ease both; }
+.slide.active .a4 { animation:up .65s .32s ease both; }
+.slide.active .a5 { animation:up .65s .44s ease both; }
+.slide.active .a6 { animation:up .65s .56s ease both; }
+
+@keyframes up {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ambient glow top-right */
+.slide::before {
+  content:''; position:absolute; top:-160px; right:-160px;
+  width:520px; height:520px; pointer-events:none;
+  background:radial-gradient(circle, rgba(212,168,67,.05) 0%, transparent 68%);
+}
+
+/* ── TYPE ── */
+.label {
+  font-size:.72rem; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:18px;
+}
+.title {
+  font-family:var(--font-d);
+  font-size:clamp(2rem,3.8vw,3.4rem);
+  line-height:1.18; color:var(--cream);
+  margin-bottom:28px;
+}
+.title em { color:var(--gold); font-style:normal; }
+
+.body {
+  font-size:clamp(.95rem,1.55vw,1.22rem);
+  line-height:1.8; color:var(--cream-dim);
+  max-width:760px;
+}
+.body strong, .body b { color:var(--cream); }
+.body p + p { margin-top:1.1em; }
+
+.rule { width:52px; height:3px; background:linear-gradient(90deg,var(--gold),transparent); margin-bottom:26px; }
+
+/* ── CALLOUT ── */
+.callout {
+  background:var(--surface2);
+  border-left:3px solid var(--gold);
+  padding:26px 34px;
+  font-family:var(--font-d);
+  font-size:clamp(1rem,1.7vw,1.4rem);
+  line-height:1.65; color:var(--cream);
+  font-style:italic; max-width:800px;
+  border-radius:0 8px 8px 0;
+}
+.callout strong { color:var(--gold-light); font-style:normal; }
+
+.callout-box {
+  border:1px solid var(--gold-dim); border-radius:10px;
+  padding:26px 36px; font-family:var(--font-d);
+  font-size:clamp(1rem,1.6vw,1.35rem);
+  line-height:1.65; color:var(--cream);
+  font-style:italic; max-width:800px; text-align:center;
+}
+
+/* ── TWO-COL CARDS ── */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:960px; width:100%; }
+.card {
+  background:var(--surface); border:1px solid #1b2538;
+  border-radius:12px; padding:30px 28px;
+}
+.card h3 { font-family:var(--font-d); font-size:1.15rem; color:var(--gold); margin-bottom:14px; }
+.card p  { font-size:.97rem; line-height:1.75; color:var(--cream-dim); }
+.card p strong { color:var(--cream); }
+
+/* ── STATS ── */
+.stat-row { display:flex; gap:20px; max-width:900px; width:100%; flex-wrap:wrap; }
+.stat-block {
+  flex:1; min-width:160px;
+  background:var(--surface); border:1px solid #1b2538;
+  border-radius:12px; padding:26px 20px; text-align:center;
+}
+.stat-val  { display:block; font-family:var(--font-d); font-size:2.4rem; color:var(--gold); margin-bottom:6px; }
+.stat-lbl  { font-size:.82rem; color:var(--cream-dim); line-height:1.4; }
+
+/* ── SCALE BARS ── */
+.scale-path { display:flex; flex-direction:column; gap:18px; max-width:820px; width:100%; }
+.scale-step { display:flex; align-items:center; gap:18px; }
+.scale-amt  { font-family:var(--font-d); font-size:1.05rem; color:var(--gold); min-width:110px; text-align:right; white-space:nowrap; }
+.scale-track { flex:1; height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+.scale-fill  { height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold)); border-radius:2px; }
+.scale-lbl   { font-size:.9rem; color:var(--cream-dim); min-width:155px; }
+.scale-step.peak .scale-amt  { color:var(--gold-light); }
+.scale-step.peak .scale-fill { background:linear-gradient(90deg,var(--gold-dim),var(--gold-light)); }
+.scale-step.peak .scale-lbl  { color:var(--cream); }
+
+/* ── TIMELINE ── */
+.timeline { display:flex; flex-direction:column; gap:0; max-width:680px; width:100%; }
+.tl-item  { display:flex; gap:22px; padding-bottom:26px; position:relative; }
+.tl-item:not(:last-child)::before {
+  content:''; position:absolute; left:19px; top:42px; bottom:0;
+  width:2px; background:linear-gradient(to bottom,var(--gold-dim),transparent);
+}
+.tl-dot {
+  width:40px; height:40px; border-radius:50%;
+  background:var(--surface2); border:2px solid var(--gold);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-size:.68rem; color:var(--gold);
+  font-weight:700; letter-spacing:.03em;
+}
+.tl-body h3 { font-size:1rem; color:var(--cream); margin-bottom:5px; padding-top:9px; }
+.tl-body p  { font-size:.92rem; line-height:1.65; color:var(--cream-dim); }
+
+/* ── CASE STUDY ── */
+.case-card {
+  background:var(--surface); border:1px solid #1b2538;
+  border-radius:12px; padding:34px 38px; max-width:820px; width:100%;
+  position:relative; overflow:hidden;
+}
+.case-card::before {
+  content:'APR 6'; position:absolute; top:-14px; right:20px;
+  font-family:var(--font-d); font-size:5.5rem;
+  color:var(--red); opacity:.07; font-weight:bold; line-height:1;
+}
+.case-card p { font-size:.99rem; line-height:1.75; color:var(--cream-dim); }
+.case-card p + p { margin-top:.9em; }
+.case-card p strong { color:var(--cream); }
+.case-result {
+  display:flex; align-items:flex-start; gap:28px;
+  margin-top:22px; padding-top:22px; border-top:1px solid #1b2538;
+}
+.case-loss { font-family:var(--font-d); font-size:2.2rem; color:var(--red); white-space:nowrap; }
+.case-sub  { font-size:.78rem; color:var(--cream-dim); margin-top:4px; line-height:1.4; }
+.case-ctx  { font-size:.96rem; color:var(--cream-dim); line-height:1.7; }
+
+/* ── BULLET LIST ── */
+.blist { list-style:none; display:flex; flex-direction:column; gap:16px; max-width:740px; width:100%; }
+.blist li { display:flex; gap:14px; align-items:flex-start; font-size:1.02rem; color:var(--cream-dim); line-height:1.7; }
+.blist li::before { content:'◆'; color:var(--gold); font-size:.55rem; flex-shrink:0; margin-top:.6em; }
+.blist li strong { color:var(--cream); }
+
+/* ── VISION GRID ── */
+.vision-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:880px; width:100%; }
+.v-card {
+  background:var(--surface); border:1px solid #1b2538;
+  border-radius:12px; padding:26px 22px; text-align:center;
+}
+.v-card .icon { font-size:1.8rem; display:block; margin-bottom:12px; }
+.v-card h3 { font-size:.82rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.v-card p  { font-size:.9rem; color:var(--cream-dim); line-height:1.65; }
+
+/* ── BUTTERFLY SVG ── */
+.butterfly-wrap { max-width:680px; width:100%; }
+
+/* ── BADGE ── */
+.badge {
+  display:inline-block; background:var(--surface2);
+  border:1px solid var(--gold-dim); color:var(--gold-light);
+  padding:7px 18px; border-radius:20px; font-size:.82rem; letter-spacing:.06em;
+}
+
+/* ── HLs ── */
+.hl   { color:var(--gold); }
+.hlg  { color:var(--green); }
+.hlr  { color:var(--red); }
+
+/* ── ORNAMENT ── */
+.orn { color:var(--gold); font-size:1.3rem; letter-spacing:.6em; margin-bottom:28px; }
+
+/* ── PROGRESS + NAV ── */
+#prog-bar { position:fixed; bottom:0; left:0; right:0; height:3px; background:#0d1220; z-index:200; }
+#prog-fill { height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold)); transition:width .45s ease; }
+
+#slide-num {
+  position:fixed; bottom:16px; right:22px;
+  font-size:.72rem; color:var(--blue-dim); letter-spacing:.12em; z-index:200;
+}
+
+.nav-btn {
+  position:fixed; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer;
+  color:var(--blue-dim); font-size:1.6rem;
+  padding:20px 14px; z-index:200;
+  transition:color .2s;
+}
+.nav-btn:hover { color:var(--gold); }
+#btn-prev { left:8px; }
+#btn-next { right:8px; }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ══ SLIDE 1 — Title ══ -->
+  <div class="slide center active" id="s1">
+    <p class="orn a1">✦ ✦ ✦</p>
+    <p class="label a2">A plain-english explanation</p>
+    <h1 class="title a3" style="font-size:clamp(2.4rem,5vw,4.2rem);">How Shane Makes<br><em>Money Every Day</em></h1>
+    <p class="body a4" style="text-align:center; max-width:560px;">For people who thought the stock market<br>was not for them.</p>
+    <div style="margin-top:36px;" class="a5"><span class="badge">Press → or Space to continue</span></div>
+  </div>
+
+  <!-- ══ SLIDE 2 — The Big Idea ══ -->
+  <div class="slide" id="s2">
+    <div class="rule a1"></div>
+    <p class="label a2">The Big Idea</p>
+    <h2 class="title a3">You don't have to bet on<br>stocks <em>going up</em>.</h2>
+    <div class="body a4">
+      <p>Most people think investing means picking the right stock and hoping it goes up. That's one way. It's also the hardest way — and the riskiest.</p>
+      <p>Shane does something different. He collects small amounts of money, every day, by selling a kind of financial insurance policy. Whether the market goes up, down, or sideways — <strong>he usually profits.</strong></p>
+      <p>Think of it like owning a vending machine. It doesn't matter what's happening in the world — <strong>people put money in, you collect it, every single day.</strong> Small, frequent, reliable bites of the apple.</p>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 3 — What Is the Stock Market ══ -->
+  <div class="slide" id="s3">
+    <div class="rule a1"></div>
+    <p class="label a2">The Stock Market</p>
+    <h2 class="title a3">Forget everything<br>you think you know.</h2>
+    <div class="body a4" style="max-width:720px;">
+      <p>The stock market is just a giant auction that runs every weekday. The most famous index — tracking hundreds of companies at once — is called <strong class="hl">SPX</strong>.</p>
+      <p>Think of SPX like a thermometer for the US economy. Up when things are good. Down when things are bad. Bouncing around in place when nothing dramatic is happening.</p>
+      <p><strong>Shane doesn't bet on which direction SPX will go.</strong> He bets that it won't go too far in either direction on any given day. And most days, he's right.</p>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 4 — Option: Real Life ══ -->
+  <div class="slide" id="s4">
+    <div class="rule a1"></div>
+    <p class="label a2">What Is an Option — Part 1</p>
+    <h2 class="title a3">You've already used one.<br>You just didn't call it that.</h2>
+    <div class="callout a4">
+      You find a house you love. You're not ready to buy, but you don't want someone else to snatch it. So you give the seller $500 and say:<br><br>
+      <em>"I want the right to buy this house at $300,000 — but I need 30 days to decide."</em><br><br>
+      That $500? That's the <strong>option premium.</strong> The seller keeps it no matter what you decide.
+    </div>
+    <div class="body a5" style="margin-top:26px; font-size:1.25rem;">
+      <p><strong style="font-size:1.4rem;">Shane is the seller.</strong></p>
+      <p style="margin-top:6px;">Every day, he collects the $500. Whether the buyer acts or not — he keeps it.</p>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 5 — Option: Market Version ══ -->
+  <div class="slide" id="s5">
+    <div class="rule a1"></div>
+    <p class="label a2">What Is an Option — Part 2</p>
+    <h2 class="title a3">Same idea.<br><em>Different asset.</em></h2>
+    <div class="two-col a4">
+      <div class="card">
+        <h3>The House Version</h3>
+        <p>Buyer pays $500 for the <strong>right</strong> to buy the house at a set price within 30 days.<br><br>Seller keeps the $500 no matter what happens.</p>
+      </div>
+      <div class="card">
+        <h3>The Market Version</h3>
+        <p>Buyer pays a <strong>premium</strong> for the right to "cash out" at a certain SPX price by end of day.<br><br>If SPX doesn't reach that price — the option expires worthless. <strong>Shane keeps the premium.</strong></p>
+      </div>
+    </div>
+    <div class="body a5" style="margin-top:24px;">
+      <p>He sells these options every trading day. Most days they expire worthless — and he keeps everything he collected.</p>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 6 — The Iron Butterfly ══ -->
+  <div class="slide" id="s6">
+    <div class="rule a1"></div>
+    <p class="label a2">The Trade Shape</p>
+    <h2 class="title a3">Four options. One shape.<br><em>Defined risk.</em></h2>
+    <div class="butterfly-wrap a4">
+      <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+        <defs>
+          <linearGradient id="gProfit" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4caf88" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#4caf88" stop-opacity=".04"/>
+          </linearGradient>
+          <linearGradient id="gLoss" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e05a5a" stop-opacity=".12"/>
+            <stop offset="100%" stop-color="#e05a5a" stop-opacity=".03"/>
+          </linearGradient>
+        </defs>
+        <!-- zones -->
+        <rect x="10"  y="28" width="188" height="132" rx="5" fill="url(#gLoss)"   stroke="#e05a5a" stroke-width=".8" stroke-opacity=".3"/>
+        <rect x="200" y="28" width="280" height="132" rx="5" fill="url(#gProfit)" stroke="#4caf88" stroke-width=".8" stroke-opacity=".4"/>
+        <rect x="482" y="28" width="188" height="132" rx="5" fill="url(#gLoss)"   stroke="#e05a5a" stroke-width=".8" stroke-opacity=".3"/>
+        <!-- zone labels -->
+        <text x="104" y="100" text-anchor="middle" fill="#e05a5a" font-size="13" font-family="'Segoe UI',sans-serif" opacity=".8">Loss Zone</text>
+        <text x="340" y="95"  text-anchor="middle" fill="#4caf88" font-size="13" font-family="'Segoe UI',sans-serif" opacity=".9">Profit Zone</text>
+        <text x="340" y="112" text-anchor="middle" fill="#4caf88" font-size="11" font-family="'Segoe UI',sans-serif" opacity=".6">(market stays here)</text>
+        <text x="576" y="100" text-anchor="middle" fill="#e05a5a" font-size="13" font-family="'Segoe UI',sans-serif" opacity=".8">Loss Zone</text>
+        <!-- left safety net -->
+        <line x1="105" y1="28" x2="105" y2="160" stroke="#e05a5a" stroke-width="1.5" stroke-dasharray="5,3" opacity=".7"/>
+        <text x="105" y="18"  text-anchor="middle" fill="#e05a5a" font-size="11.5" font-family="'Segoe UI',sans-serif">Buy 6,775</text>
+        <text x="105" y="175" text-anchor="middle" fill="#7a6028" font-size="10"   font-family="'Segoe UI',sans-serif">safety net</text>
+        <!-- left sell -->
+        <line x1="250" y1="28" x2="250" y2="160" stroke="#d4a843" stroke-width="2" opacity=".9"/>
+        <text x="250" y="18"  text-anchor="middle" fill="#d4a843" font-size="11.5" font-family="'Segoe UI',sans-serif">Sell 6,800</text>
+        <text x="250" y="175" text-anchor="middle" fill="#7a6028" font-size="10"   font-family="'Segoe UI',sans-serif">collect $</text>
+        <!-- center ATM -->
+        <line x1="340" y1="22" x2="340" y2="168" stroke="#f0c96a" stroke-width="2.5" opacity=".95"/>
+        <text x="340" y="12"  text-anchor="middle" fill="#f0c96a" font-size="13"   font-family="Georgia,serif" font-weight="bold">ATM — 6,800</text>
+        <text x="340" y="183" text-anchor="middle" fill="#9a9080" font-size="10"   font-family="'Segoe UI',sans-serif">entry point</text>
+        <!-- right sell -->
+        <line x1="430" y1="28" x2="430" y2="160" stroke="#d4a843" stroke-width="2" opacity=".9"/>
+        <text x="430" y="18"  text-anchor="middle" fill="#d4a843" font-size="11.5" font-family="'Segoe UI',sans-serif">Sell 6,800</text>
+        <text x="430" y="175" text-anchor="middle" fill="#7a6028" font-size="10"   font-family="'Segoe UI',sans-serif">collect $</text>
+        <!-- right safety net -->
+        <line x1="575" y1="28" x2="575" y2="160" stroke="#e05a5a" stroke-width="1.5" stroke-dasharray="5,3" opacity=".7"/>
+        <text x="575" y="18"  text-anchor="middle" fill="#e05a5a" font-size="11.5" font-family="'Segoe UI',sans-serif">Buy 6,825</text>
+        <text x="575" y="175" text-anchor="middle" fill="#7a6028" font-size="10"   font-family="'Segoe UI',sans-serif">safety net</text>
+        <!-- axis arrow -->
+        <text x="340" y="197" text-anchor="middle" fill="#3a5070" font-size="11" font-family="'Segoe UI',sans-serif">← SPX price →</text>
+      </svg>
+    </div>
+    <div class="body a5" style="margin-top:10px; font-size:.95rem;">
+      <p><span class="hl">Gold lines</span> = sell options, collect premium &nbsp;·&nbsp; <span class="hlr">Dashed lines</span> = buy protection, cap the max loss</p>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 7 — Why 0-DTE ══ -->
+  <div class="slide" id="s7">
+    <div class="rule a1"></div>
+    <p class="label a2">Why Today's Options?</p>
+    <h2 class="title a3">Time is money.<br><em>Literally.</em></h2>
+    <div class="two-col a4">
+      <div class="card">
+        <h3>The Ice Cube</h3>
+        <p>Every option loses value as time passes — like an ice cube melting. The closer to expiration, the <strong>faster it melts.</strong><br><br>By end of day, a 0-DTE option that didn't pay off is worth <strong>exactly zero.</strong></p>
+      </div>
+      <div class="card">
+        <h3>Why Shane Wins</h3>
+        <p>He sold those ice cubes this morning.<br><br>Every hour the market doesn't move dramatically, his options melt toward zero — and that money <strong>stays in his account.</strong><br><br>He doesn't need to be right. He just needs time to pass.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 8 — Daily Routine ══ -->
+  <div class="slide" id="s8">
+    <div class="rule a1"></div>
+    <p class="label a2">The Daily Routine</p>
+    <h2 class="title a3">A typical morning.</h2>
+    <div class="timeline a4">
+      <div class="tl-item">
+        <div class="tl-dot">9AM</div>
+        <div class="tl-body">
+          <h3>Read the news. Check oil prices. Feel the pulse.</h3>
+          <p>Is today calm or chaotic? No precise prediction needed — just a general read on the day.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">9:30</div>
+        <div class="tl-body">
+          <h3>Place the trade. Collect the premium.</h3>
+          <p>Sell the iron butterfly right at wherever SPX is sitting. Then watch. Let time work.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">→</div>
+        <div class="tl-body">
+          <h3>Monitor. Act if needed. Let time do the work.</h3>
+          <p>Market going sideways? Do nothing. Let the premium decay and close when the profit goal is hit.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">12PM</div>
+        <div class="tl-body">
+          <h3>Done. Ideally before 2 PM at the very latest.</h3>
+          <p>Close everything. Log off. The trading day is over.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 9 — Two Things ══ -->
+  <div class="slide" id="s9">
+    <div class="rule a1"></div>
+    <p class="label a2">The Foundation</p>
+    <h2 class="title a3">Two things.<br>That's it.</h2>
+    <div class="two-col a4">
+      <div class="card">
+        <h3>1. Defined Risk</h3>
+        <p>Before Shane enters a trade, he already knows the worst thing that can happen. It's a <strong>number</strong>. It doesn't change. The market can't surprise him with a loss bigger than what he already planned for.<br><br>Most people lose money because they didn't know how bad "bad" could get. <strong>Shane always knows.</strong></p>
+      </div>
+      <div class="card">
+        <h3>2. The Daily Goal</h3>
+        <p>Once Shane hits his target for the day — <strong>he stops.</strong> Full stop. Closes the laptop, goes outside, done.<br><br>This sounds simple. It isn't. The temptation to make more is where most people blow up their accounts. <strong>The discipline to stop is the strategy.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 10 — Bad Day Case Study ══ -->
+  <div class="slide" id="s10">
+    <div class="rule a1"></div>
+    <p class="label a2">What a Bad Day Looks Like</p>
+    <h2 class="title a3">They happen.<br>Here's a real one.</h2>
+    <div class="case-card a4">
+      <p><strong>April 6, 2026.</strong> Geopolitical crisis. The market made a fast, dramatic move the moment Shane was in his trade. No warning — the move was too big, too fast.</p>
+      <p>Shane's goal changed immediately: <em>forget profit, minimize the damage.</em> He closed the losing side as fast as he could. He took the loss. And stopped.</p>
+      <div class="case-result">
+        <div>
+          <div class="case-loss">−$230</div>
+          <div class="case-sub">on a $37,000 account<br>less than 1%</div>
+        </div>
+        <div class="case-ctx">
+          Next day: <span class="hlg">+$540</span><br>
+          Day after: <span class="hlg">+$690</span><br>
+          Week recovered completely.<br>
+          <strong style="color:var(--cream);">The strategy worked exactly as designed.</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 11 — Emotional Discipline ══ -->
+  <div class="slide" id="s11">
+    <div class="rule a1"></div>
+    <p class="label a2">The Hardest Part</p>
+    <h2 class="title a3">The math is easy.<br><em>The feelings are not.</em></h2>
+    <div class="callout a4">
+      You are not deciding whether to lose money during the trade.<br>
+      That decision was already made — <strong>before you entered.</strong>
+    </div>
+    <ul class="blist a5" style="margin-top:26px;">
+      <li><span>When Shane sets his risk parameters, past-Shane says <strong>"I'm okay losing up to X today."</strong> Present-Shane doesn't re-open that debate. He just executes the plan.</span></li>
+      <li><span>The people this fails for aren't bad at math. They're people who can't separate their feelings from their decisions in the moment. <strong>That's human.</strong> It's why this must be learned slowly, with small amounts, until the discipline becomes automatic.</span></li>
+    </ul>
+  </div>
+
+  <!-- ══ SLIDE 12 — The Numbers ══ -->
+  <div class="slide" id="s12">
+    <div class="rule a1"></div>
+    <p class="label a2">Real Numbers</p>
+    <h2 class="title a3">Right now. Real trades.<br><em>Rough market.</em></h2>
+    <div class="stat-row a4">
+      <div class="stat-block">
+        <span class="stat-val">86%</span>
+        <span class="stat-lbl">Win rate<br>(April 2026, live trades)</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">$500</span>
+        <span class="stat-lbl">Daily profit goal<br>(current)</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-val">&lt;1%</span>
+        <span class="stat-lbl">Max loss on worst day<br>(April 6)</span>
+      </div>
+    </div>
+    <div class="scale-path a5" style="margin-top:32px;">
+      <div class="scale-step">
+        <div class="scale-amt">$500/day</div>
+        <div class="scale-track"><div class="scale-fill" style="width:33%"></div></div>
+        <div class="scale-lbl">$125,000 / year</div>
+      </div>
+      <div class="scale-step">
+        <div class="scale-amt">$1,000/day</div>
+        <div class="scale-track"><div class="scale-fill" style="width:66%"></div></div>
+        <div class="scale-lbl">$250,000 / year</div>
+      </div>
+      <div class="scale-step peak">
+        <div class="scale-amt">$1,500/day</div>
+        <div class="scale-track"><div class="scale-fill" style="width:100%"></div></div>
+        <div class="scale-lbl">$375,000 / year ✦</div>
+      </div>
+    </div>
+    <div class="body a6" style="margin-top:16px; font-size:.92rem;"><p>Same strategy. Same skills. More capital. No new tricks required.</p></div>
+  </div>
+
+  <!-- ══ SLIDE 13 — Start With $500 ══ -->
+  <div class="slide" id="s13">
+    <div class="rule a1"></div>
+    <p class="label a2">The Entry Point</p>
+    <h2 class="title a3">You can start<br>with <em>$500</em>.</h2>
+    <div class="body a4" style="max-width:700px;">
+      <p>The same strategy works at any account size. With $500, you trade a smaller version of the same instrument. You set a smaller daily goal. You use narrower safety nets.</p>
+      <p><strong>The mechanics are identical.</strong> The profit is smaller. The losses are smaller. The learning is real.</p>
+      <p>The point isn't to get rich on $500. The point is to learn the system with money you can afford to lose, build consistency, and scale up from there.</p>
+    </div>
+    <div class="callout-box a5" style="margin-top:28px;">
+      Consistent beats lucky. Every time.
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 14 — The Vision ══ -->
+  <div class="slide center" id="s14">
+    <div class="rule a1" style="margin:0 auto 26px;"></div>
+    <p class="label a2">The Vision</p>
+    <h2 class="title a3" style="text-align:center;">This isn't just<br>about <em>us</em>.</h2>
+    <div class="vision-grid a4">
+      <div class="v-card">
+        <span class="icon">📖</span>
+        <h3>Learn</h3>
+        <p>Anyone willing to learn gets taught for free, starting with $500 and a brokerage account.</p>
+      </div>
+      <div class="v-card">
+        <span class="icon">🤝</span>
+        <h3>Reach Back</h3>
+        <p>People who succeed help the next person — seeding their account, helping them incorporate, funding their start.</p>
+      </div>
+      <div class="v-card">
+        <span class="icon">🏛️</span>
+        <h3>Nobody Left Behind</h3>
+        <p>For those who can't do this themselves — a trust, a broker, and the strategy running on their behalf.</p>
+      </div>
+    </div>
+    <div class="body a5" style="text-align:center; margin-top:30px; max-width:640px;">
+      <p>The stock market has always been a tool for people who already had money.<br><strong>This is an attempt to change that. One person at a time.</strong></p>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Controls -->
+<div id="prog-bar"><div id="prog-fill"></div></div>
+<div id="slide-num">1 / 14</div>
+<button class="nav-btn" id="btn-prev" aria-label="Previous">‹</button>
+<button class="nav-btn" id="btn-next" aria-label="Next">›</button>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let cur = 0;
+
+function go(n) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(n, total - 1));
+  slides[cur].classList.add('active');
+  document.getElementById('slide-num').textContent  = (cur + 1) + ' / ' + total;
+  document.getElementById('prog-fill').style.width  = ((cur + 1) / total * 100) + '%';
+}
+
+document.getElementById('btn-next').onclick = () => go(cur + 1);
+document.getElementById('btn-prev').onclick = () => go(cur - 1);
+
+document.addEventListener('keydown', e => {
+  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); go(cur - 1); }
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 48) go(cur + (dx < 0 ? 1 : -1));
+}, { passive:true });
+
+go(0);
+</script>
+</body>
+</html>
