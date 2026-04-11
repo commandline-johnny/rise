@@ -213,6 +213,14 @@ body::after {
 /* ── ORNAMENT ── */
 .orn { color:var(--gold); font-size:1.3rem; letter-spacing:.6em; margin-bottom:28px; }
 
+/* ── DISCLAIMER ── */
+#disclaimer {
+  position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+  font-size:.68rem; color:var(--blue-dim); letter-spacing:.04em;
+  z-index:200; white-space:nowrap; pointer-events:none;
+  text-align:center;
+}
+
 /* ── PROGRESS + NAV ── */
 #prog-bar { position:fixed; bottom:0; left:0; right:0; height:3px; background:#0d1220; z-index:200; }
 #prog-fill { height:100%; background:linear-gradient(90deg,var(--gold-dim),var(--gold)); transition:width .45s ease; }
@@ -557,6 +565,7 @@ body::after {
 <!-- Controls -->
 <div id="prog-bar"><div id="prog-fill"></div></div>
 <div id="slide-num">1 / 14</div>
+<div id="disclaimer">Not financial advice. I'm not a licensed professional — this documents a process that worked for me.</div>
 <button class="nav-btn" id="btn-prev" aria-label="Previous">‹</button>
 <button class="nav-btn" id="btn-next" aria-label="Next">›</button>
 
