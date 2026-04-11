@@ -275,5 +275,5 @@ The strategy requires money to make money. The community provides the money for 
 ## Notes
 
 - Strategy credit: inspired by advice from a respected trading educator on YouTube
-- This playbook reflects real daily trading results: $500–900 profit/day on SPX, ~86% win rate (6/7 days, April 2026), during one of the most volatile YTD markets in recent memory
+- This playbook reflects real daily trading results: $500–900 profit/day on SPX, ~85% win rate (11 wins, 2 losses across 13 trading days, March–April 2026), during one of the most volatile YTD markets in recent memory
 - Advanced techniques (re-legging after closing a wing, intraday adjustments) are out of scope for this document
