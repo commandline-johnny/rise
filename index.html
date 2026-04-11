@@ -213,6 +213,16 @@ body::after {
 /* ── ORNAMENT ── */
 .orn { color:var(--gold); font-size:1.3rem; letter-spacing:.6em; margin-bottom:28px; }
 
+/* ── SITE LINK ── */
+#site-link {
+  position:fixed; top:16px; right:22px; z-index:200;
+  font-size:.72rem; letter-spacing:.08em;
+  color:var(--blue-dim); text-decoration:none;
+  font-family:'Segoe UI',sans-serif;
+  transition:color .2s;
+}
+#site-link:hover { color:var(--gold); }
+
 /* ── DISCLAIMER ── */
 #disclaimer {
   position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
@@ -565,6 +575,7 @@ body::after {
 <!-- Controls -->
 <div id="prog-bar"><div id="prog-fill"></div></div>
 <div id="slide-num">1 / 14</div>
+<a id="site-link" href="https://playbook.sulium.com">The Playbook →</a>
 <div id="disclaimer">Not financial advice. I'm not a licensed professional — this documents a process that worked for me.</div>
 <button class="nav-btn" id="btn-prev" aria-label="Previous">‹</button>
 <button class="nav-btn" id="btn-next" aria-label="Next">›</button>
